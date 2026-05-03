@@ -301,9 +301,9 @@
   }
 
   /* PRICING */
-  .pricing-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 56px;
-  }
+  pricing-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 56px; max-width: 800px; margin-left: auto; margin-right: auto;
+}
   .pricing-card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
@@ -589,7 +589,7 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">ИЗЗЗИ Магазин <span>by Сбер</span></div>
+  <div class="logo">ИЗЗЗИ Старт <span>by Сбер</span></div>
   <ul>
     <li><a href="#problem">Зачем</a></li>
     <li><a href="#solution">Как работает</a></li>
@@ -605,7 +605,7 @@
 <div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="hero-badge">🚀 Новый продукт ИЗЗЗИ Бизнес — уже доступен</div>
+  <div class="hero-badge">🚀 Новый продукт ИЗЗЗИ Старт — уже доступен</div>
   <h1>
     Стань следующим<br>
     <div class="rotating-words">
@@ -862,7 +862,6 @@
           <div class="calc-plans">
             <div class="calc-plan active" onclick="setPlan(this, 0, 'Старт — 0%')">Старт<br><small>0%</small></div>
             <div class="calc-plan" onclick="setPlan(this, 3, 'Про — 3%')">Про<br><small>3%</small></div>
-            <div class="calc-plan" onclick="setPlan(this, 2, 'Бизнес — 2%')">Бизнес<br><small>2%</small></div>
           </div>
         </div>
 
@@ -932,22 +931,6 @@
       </ul>
       <button onclick="openConstructor()" class="btn-primary plan-cta">Попробовать 30 дней</button>
     </div>
-    <div class="pricing-card">
-      <div class="plan-name">Бизнес</div>
-      <div class="plan-price">2 990 <span>₽/мес</span></div>
-      <div class="plan-sub">Для команд и серьёзных объёмов</div>
-      <ul class="plan-features">
-        <li>Всё из Про</li>
-
-        <li>Мультимагазин (до 5 сайтов)</li>
-        <li>Персональный менеджер</li>
-        <li>API интеграции</li>
-        <li>B2B оптовый каталог</li>
-        <li>Приоритетная поддержка</li>
-      </ul>
-      <button onclick="openConstructor()" class="btn-ghost plan-cta">Связаться с нами</button>
-    </div>
-  </div>
 </section>
 
 
@@ -984,7 +967,7 @@
     document.querySelectorAll('.calc-plan').forEach(p => p.classList.remove('active'));
     el.classList.add('active');
     currentCommission = commission;
-    currentSub = commission === 0 ? 0 : commission === 3 ? 990 : 2990;
+   currentSub = commission === 0 ? 0 : 990;
     document.getElementById('val-plan').textContent = label;
     calcUpdate();
   }
@@ -1052,7 +1035,7 @@
 " onmouseover="this.style.transform='scale(1.1)'"
    onmouseout="this.style.transform='scale(1)'">←</button>
     <iframe
-      src="/index.html"
+      src="http://localhost:8000/index.html"
       style="width:100%; height:100%; border:none;"
       id="constructor-iframe"
     ></iframe>

@@ -548,6 +548,352 @@
   #screen-published > * { position: relative; z-index: 1; }
   #screen-published .pub-navbar { position: sticky; z-index: 100; }
 
+
+  /* ===================== ЭКРАН 0 — ОНБОРДИНГ ===================== */
+  #screen-onboarding { flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+
+  .onboarding-wrapper {
+    width: 100%;
+    max-width: 680px;
+    margin-top: 80px;
+    text-align: center;
+  }
+
+  .onboarding-eyebrow {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--teal);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .onboarding-eyebrow::before,
+  .onboarding-eyebrow::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--teal);
+    border-radius: 2px;
+  }
+
+  .onboarding-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(24px, 4vw, 36px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .onboarding-subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 48px;
+    font-weight: 300;
+  }
+
+  .onboarding-options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .onboarding-option {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 28px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .onboarding-option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .onboarding-option.primary { border-color: rgba(33,208,122,0.3); background: rgba(33,208,122,0.05); }
+  .onboarding-option.primary::before { background: rgba(33,208,122,0.05); }
+  .onboarding-option.secondary { border-color: rgba(0,201,177,0.2); }
+  .onboarding-option.tertiary { border-color: rgba(255,255,255,0.06); }
+
+  .onboarding-option:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); }
+  .onboarding-option.primary:hover { border-color: rgba(33,208,122,0.5); box-shadow: 0 12px 40px rgba(33,208,122,0.15); }
+  .onboarding-option.secondary:hover { border-color: rgba(0,201,177,0.4); }
+  .onboarding-option.tertiary:hover { border-color: rgba(255,255,255,0.15); }
+
+  .opt-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .onboarding-option.primary .opt-icon { background: rgba(33,208,122,0.15); }
+  .onboarding-option.secondary .opt-icon { background: rgba(0,201,177,0.12); }
+  .onboarding-option.tertiary .opt-icon { background: rgba(255,255,255,0.06); }
+
+  .opt-content { flex: 1; }
+
+  .opt-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .opt-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .opt-arrow {
+    font-size: 18px;
+    color: var(--muted);
+    transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+  }
+
+  .onboarding-option:hover .opt-arrow { transform: translateX(4px); color: var(--white); }
+  .onboarding-option.primary .opt-arrow { color: var(--green); }
+
+  /* ===================== ЭКРАН ОТКРЫТИЯ ИП ===================== */
+  #screen-open-ip { flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+
+  .ip-wrapper {
+    width: 100%;
+    max-width: 640px;
+    margin-top: 80px;
+  }
+
+  .ip-back {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--muted);
+    cursor: pointer;
+    margin-bottom: 32px;
+    transition: color 0.2s;
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Onest', sans-serif;
+  }
+  .ip-back:hover { color: var(--white); }
+
+  .ip-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 44px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ip-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
+    opacity: 0.6;
+  }
+
+  .ip-sber-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .ip-sber-circle {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 16px; font-weight: 900;
+    color: #050810;
+  }
+  .ip-sber-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px; font-weight: 700;
+    color: var(--white);
+  }
+
+  .ip-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+  }
+  .ip-title .accent { color: var(--green); }
+
+  .ip-subtitle {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .ip-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+
+  .ip-step {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 14px;
+  }
+
+  .ip-step-num {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px; font-weight: 700;
+    color: #050810;
+    flex-shrink: 0;
+  }
+
+  .ip-step-text { font-size: 13px; color: var(--white); line-height: 1.4; }
+  .ip-step-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  .ip-benefits {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .ip-benefit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .ip-benefit::before {
+    content: '✓';
+    color: var(--green);
+    font-weight: 700;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .ip-cta {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    border: none;
+    border-radius: 14px;
+    color: #050810;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .ip-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(33,208,122,0.3); }
+
+  .ip-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  /* DEMO BANNER на конечном экране */
+  .demo-launch-banner {
+    margin: 0 40px 48px;
+    background: linear-gradient(135deg, rgba(33,208,122,0.08), rgba(0,201,177,0.08));
+    border: 1px solid rgba(33,208,122,0.25);
+    border-radius: 24px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-launch-banner::before {
+    content: '👀';
+    position: absolute;
+    top: -10px; right: 20px;
+    font-size: 48px;
+    opacity: 0.15;
+  }
+  .demo-launch-banner h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(16px, 2.5vw, 22px);
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+    color: var(--white);
+  }
+  .demo-launch-banner p {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+  .demo-launch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    background: linear-gradient(135deg, var(--green), var(--teal));
+    border: none;
+    border-radius: 14px;
+    color: #050810;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-decoration: none;
+  }
+  .demo-launch-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(33,208,122,0.3); }
+
 </style>
 </head>
 <body>
@@ -564,8 +910,108 @@
   <div class="powered-badge">Powered by <span>GigaChat</span> · <span>ЮKassa</span> · <span>СберТаргет</span></div>
 </div>
 
+<!-- ЭКРАН 0: ОНБОРДИНГ — РАЗВИЛКА -->
+<div class="screen active" id="screen-onboarding">
+  <div class="onboarding-wrapper">
+    <div class="onboarding-eyebrow">ИЗЗЗИ Бизнес Бокс</div>
+    <h1 class="onboarding-title">Создай сайт для<br>своего бизнеса</h1>
+    <p class="onboarding-subtitle">За 10 минут — с приёмом платежей и рекламой.<br>Выбери с чего начать:</p>
+
+    <div class="onboarding-options">
+
+      <div class="onboarding-option primary" onclick="chooseYesIP()">
+        <div class="opt-icon">✅</div>
+        <div class="opt-content">
+          <div class="opt-title">У меня есть ИП или ООО в Сбере</div>
+          <div class="opt-desc">Создай сайт прямо сейчас — ЮKassa и СберТаргет уже подключены</div>
+        </div>
+        <div class="opt-arrow">→</div>
+      </div>
+
+      <div class="onboarding-option secondary" onclick="chooseDemoIP()">
+        <div class="opt-icon">👀</div>
+        <div class="opt-content">
+          <div class="opt-title">Нет ИП, но хочу посмотреть как выглядит сайт</div>
+          <div class="opt-desc">Попробуй демо — увидишь готовый сайт и сможешь открыть ИП после</div>
+        </div>
+        <div class="opt-arrow">→</div>
+      </div>
+
+      <div class="onboarding-option tertiary" onclick="chooseOpenIP()">
+        <div class="opt-icon">🚀</div>
+        <div class="opt-content">
+          <div class="opt-title">Хочу открыть ИП и запустить сайт</div>
+          <div class="opt-desc">Бесплатная регистрация через Сбер — займёт 15 минут</div>
+        </div>
+        <div class="opt-arrow">→</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ЭКРАН ОТКРЫТИЯ ИП -->
+<div class="screen" id="screen-open-ip">
+  <div class="ip-wrapper">
+    <button class="ip-back" onclick="showScreen('screen-onboarding')">← Назад</button>
+
+    <div class="ip-card">
+      <div class="ip-sber-logo">
+        <div class="ip-sber-circle">С</div>
+        <div class="ip-sber-name">СберБизнес</div>
+      </div>
+
+      <div class="ip-title">Открой ИП <span class="accent">бесплатно</span><br>за 15 минут</div>
+      <div class="ip-subtitle">Регистрация онлайн — без визита в налоговую.<br>После открытия ИП сайт будет готов к запуску.</div>
+
+      <div class="ip-steps">
+        <div class="ip-step">
+          <div class="ip-step-num">1</div>
+          <div>
+            <div class="ip-step-text">Заполни заявку на сайте Сбера</div>
+            <div class="ip-step-sub">Паспорт + СНИЛС + выбор системы налогообложения</div>
+          </div>
+        </div>
+        <div class="ip-step">
+          <div class="ip-step-num">2</div>
+          <div>
+            <div class="ip-step-text">Подпиши документы онлайн</div>
+            <div class="ip-step-sub">Через СберID — без ЭЦП и поездок в ФНС</div>
+          </div>
+        </div>
+        <div class="ip-step">
+          <div class="ip-step-num">3</div>
+          <div>
+            <div class="ip-step-text">Получи статус ИП за 3 рабочих дня</div>
+            <div class="ip-step-sub">Документы придут на email и в приложение</div>
+          </div>
+        </div>
+        <div class="ip-step">
+          <div class="ip-step-num">4</div>
+          <div>
+            <div class="ip-step-text">Вернись и запусти свой сайт</div>
+            <div class="ip-step-sub">ЮKassa и СберТаргет подключатся автоматически</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ip-benefits">
+        <div class="ip-benefit">Бесплатная регистрация</div>
+        <div class="ip-benefit">Без визита в налоговую</div>
+        <div class="ip-benefit">Расчётный счёт в день открытия</div>
+        <div class="ip-benefit">ЮKassa сразу подключена</div>
+      </div>
+
+      <button class="ip-cta" onclick="window.open('https://www.sberbank.ru/ru/s_m_business/reg#start_reg', '_blank')">
+        🚀 Открыть ИП через Сбер
+      </button>
+      <div class="ip-note">После открытия ИП вернитесь сюда и нажмите<br>«У меня есть ИП или ООО в Сбере»</div>
+    </div>
+  </div>
+</div>
+
 <!-- ЭКРАН 1: ВВОД -->
-<div class="screen active" id="screen-input">
+<div class="screen" id="screen-input">
   <div class="input-wrapper">
     <div class="hero-label">Новый продукт ИЗЗЗИ Бокса</div>
     <h1>Сайт для твоего<br>бизнеса за <span class="accent">10 минут</span></h1>
@@ -713,7 +1159,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-banner">
+    <div class="footer-banner" id="real-footer-banner">
       <h2>Сайт готов к запуску</h2>
       <p>Опубликуй и посмотри как его увидят твои клиенты — с рабочей оплатой через ЮKassa</p>
       <button class="btn-primary" style="max-width:320px; margin:0 auto;" onclick="publishSite()">Опубликовать и открыть сайт</button>
@@ -818,6 +1264,14 @@
 
   <div style="height: 80px;"></div>
 
+  <div class="demo-launch-banner" id="demo-launch-banner" style="display:none;">
+    <h3>Нравится? Запусти свой настоящий сайт!</h3>
+    <p>Откройте ИП бесплатно через Сбер — и этот сайт заработает с реальным приёмом платежей через ЮKassa</p>
+    <button class="demo-launch-btn" onclick="window.open('https://www.sberbank.ru/ru/s_m_business/reg#start_reg', '_blank')">
+      🚀 Открыть ИП и запустить сайт
+    </button>
+  </div>
+
   <button class="back-to-admin" onclick="showScreen('screen-dashboard')">Вернуться в настройки</button>
 </div>
 
@@ -866,6 +1320,23 @@
 
 <script>
 let generatedData = null;
+let isDemo = false;
+
+// --- ОНБОРДИНГ ---
+function chooseYesIP() {
+  isDemo = false;
+  showScreen('screen-input');
+}
+
+function chooseDemoIP() {
+  isDemo = true;
+  showScreen('screen-input');
+}
+
+function chooseOpenIP() {
+  showScreen('screen-open-ip');
+}
+
 
 // --- HERO TEXT ANIMATION -----------------------------------
 function animateHeroText(titleEl) {
@@ -1132,9 +1603,9 @@ async function startGeneration() {
 }`;
 
     try {
-      const tokenResp = await fetch('/token', { method: 'POST' });
+      const tokenResp = await fetch('http://localhost:8000/token', { method: 'POST' });
       const token = (await tokenResp.json()).access_token;
-      const chatResp = await fetch('/chat', {
+      const chatResp = await fetch('http://localhost:8000/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, messages: [{ role: 'user', content: prompt }] })
@@ -1268,7 +1739,7 @@ function populateProduct(data, bizName) {
 
   const query = encodeURIComponent(data.product_image_query || (data.product_name || bizName).split(' ').slice(0, 2).join(' '));
 
-  fetch('/image?q=' + query)
+  fetch('http://localhost:8000/image?q=' + query)
     .then(function(r) {
       if (r.ok) return r.blob();
       throw new Error('no image');
@@ -1345,7 +1816,21 @@ function connectTarget() {
 
 function publishSite() {
   showToast('Публикация завершена! Открываем сайт...', 2000);
-  setTimeout(() => showScreen('screen-published'), 800);
+  setTimeout(() => {
+    showScreen('screen-published');
+    // Show demo banner if in demo mode
+    const demoBanner = document.getElementById('demo-launch-banner');
+    const realFooter = document.getElementById('real-footer-banner');
+    if (demoBanner && realFooter) {
+      if (isDemo) {
+        demoBanner.style.display = 'block';
+        realFooter.style.display = 'none';
+      } else {
+        demoBanner.style.display = 'none';
+        realFooter.style.display = 'block';
+      }
+    }
+  }, 800);
 }
 function resetToInput() { showScreen('screen-input'); }
 

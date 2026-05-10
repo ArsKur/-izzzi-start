@@ -130,7 +130,7 @@
   .loader-ring svg { width: 100%; height: 100%; animation: spin 2s linear infinite; }
   @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   .loader-ring .inner-dot { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
-  .loader-ring .inner-dot::after { content: '✦'; font-size: 28px; color: var(--accent1); animation: pulse 1.5s ease-in-out infinite; }
+  .loader-ring .inner-dot::after { content: ''; font-size: 28px; color: var(--accent1); animation: pulse 1.5s ease-in-out infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } }
   .loading-title { font-family: 'Unbounded', sans-serif; font-size: 20px; font-weight: 700; }
   .loading-steps { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 400px; }
@@ -855,7 +855,7 @@
     overflow: hidden;
   }
   .demo-launch-banner::before {
-    content: '👀';
+    content: '';
     position: absolute;
     top: -10px; right: 20px;
     font-size: 48px;
@@ -920,7 +920,7 @@
     <div class="onboarding-options">
 
       <div class="onboarding-option primary" onclick="chooseYesIP()">
-        <div class="opt-icon">✅</div>
+        <div class="opt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#21d07a" stroke-width="2"/><path d="M7 12l3 3 7-7" stroke="#21d07a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="opt-content">
           <div class="opt-title">У меня есть ИП или ООО в Сбере</div>
           <div class="opt-desc">Создай сайт прямо сейчас — ЮKassa и СберТаргет уже подключены</div>
@@ -929,7 +929,7 @@
       </div>
 
       <div class="onboarding-option secondary" onclick="chooseDemoIP()">
-        <div class="opt-icon">👀</div>
+        <div class="opt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="#00c9b1" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="3" stroke="#00c9b1" stroke-width="2"/></svg></div>
         <div class="opt-content">
           <div class="opt-title">Нет ИП, но хочу посмотреть как выглядит сайт</div>
           <div class="opt-desc">Попробуй демо — увидишь готовый сайт и сможешь открыть ИП после</div>
@@ -938,7 +938,7 @@
       </div>
 
       <div class="onboarding-option tertiary" onclick="chooseOpenIP()">
-        <div class="opt-icon">🚀</div>
+        <div class="opt-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C12 2 7 8 7 13a5 5 0 0010 0c0-5-5-11-5-11z" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="13" r="2" fill="rgba(255,255,255,0.6)"/><path d="M9 20l-2 2M15 20l2 2" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         <div class="opt-content">
           <div class="opt-title">Хочу открыть ИП и запустить сайт</div>
           <div class="opt-desc">Бесплатная регистрация через Сбер — займёт 15 минут</div>
@@ -1003,7 +1003,7 @@
       </div>
 
       <button class="ip-cta" onclick="window.open('https://www.sberbank.ru/ru/s_m_business/reg#start_reg', '_blank')">
-        🚀 Открыть ИП через Сбер
+        Открыть ИП через СберБизнес
       </button>
       <div class="ip-note">После открытия ИП вернитесь сюда и нажмите<br>«У меня есть ИП или ООО в Сбере»</div>
     </div>
@@ -1080,7 +1080,7 @@
 <div class="screen" id="screen-dashboard">
   <div class="result-topbar">
     <div class="logo-text">ИЗЗЗИ Дашборд</div>
-    <div class="site-url"><span>🔒</span><span class="url-text" id="site-url-text">izzzi.ru/my-business</span></div>
+    <div class="site-url"><span></span><span class="url-text" id="site-url-text">izzzi.ru/my-business</span></div>
     <div class="topbar-actions">
       <button class="btn-secondary" onclick="publishSite()">Опубликовать сайт</button>
       <button class="btn-reset" onclick="resetToInput()">Изменить</button>
@@ -1152,7 +1152,7 @@
           <button class="connect-btn" onclick="connectYukassa()">Подключить</button>
         </div>
         <div class="connect-card sbergetting" id="card-target">
-          <div class="connect-logo">📢</div>
+          <div class="connect-logo"></div>
           <div class="connect-info"><div class="connect-name">СберТаргет</div><div class="connect-desc">Реклама в экосистеме Сбера. Бесплатный доступ в ИЗЗЗИ Боксе.</div></div>
           <div class="connect-status"><span>✓</span> Подключено</div>
           <button class="connect-btn" onclick="connectTarget()">Запустить рекламу</button>
@@ -1188,7 +1188,7 @@
     <div class="section-title">Закажи прямо сейчас</div>
     <div class="product-card" onclick="openPaymentModal()">
       <div class="product-img" id="product-img-container">
-        <div class="product-img-placeholder" id="product-emoji">🛍️</div>
+        <div class="product-img-placeholder" id="product-emoji"></div>
       </div>
       <div class="product-info">
         <div class="product-tag" id="product-tag">Популярное</div>
@@ -1268,7 +1268,7 @@
     <h3>Нравится? Запусти свой настоящий сайт!</h3>
     <p>Откройте ИП бесплатно через Сбер — и этот сайт заработает с реальным приёмом платежей через ЮKassa</p>
     <button class="demo-launch-btn" onclick="window.open('https://www.sberbank.ru/ru/s_m_business/reg#start_reg', '_blank')">
-      🚀 Открыть ИП и запустить сайт
+      Открыть ИП и запустить сайт
     </button>
   </div>
 
@@ -1290,7 +1290,7 @@
       </div>
       <div class="card-input-wrap">
         <input type="text" class="fake-card-input" placeholder="0000 0000 0000 0000" id="card-number" maxlength="19" oninput="formatCard(this)" onFocus="this.style.borderColor='#21d07a'" onBlur="this.style.borderColor='#d0d0d0'">
-        <span class="card-type-icon" id="card-type-icon">💳</span>
+        <span class="card-type-icon" id="card-type-icon"></span>
       </div>
       <div class="card-row" style="margin-bottom: 12px;">
         <input type="text" class="fake-card-input" placeholder="ММ / ГГ" maxlength="5" oninput="formatExpiry(this)" onFocus="this.style.borderColor='#21d07a'" onBlur="this.style.borderColor='#d0d0d0'">
@@ -1303,13 +1303,13 @@
         <div class="sbp-text">Оплатить через Систему быстрых платежей</div>
       </div>
       <button class="pay-btn" onclick="simulatePayment()" id="pay-btn-main">
-        <span class="pay-btn-inner"><span class="lock-icon">🔒</span> Оплатить безопасно</span>
+        <span class="pay-btn-inner"><span class="lock-icon"></span> Оплатить безопасно</span>
       </button>
       <div class="modal-secure">Защищено 256-bit шифрованием · ЮKassa · PCI DSS</div>
     </div>
     <!-- Экран успеха -->
     <div class="payment-success" id="payment-success-view">
-      <div class="success-icon">✅</div>
+      <div class="success-icon">✓</div>
       <div class="success-title">Оплата прошла успешно!</div>
       <div class="success-text">Спасибо за покупку. Мы получили ваш заказ и свяжемся с вами в ближайшее время для подтверждения.</div>
       <div class="success-order" id="success-order-num">Заказ #00001</div>
@@ -1371,10 +1371,10 @@ function formatCard(input) {
   // Определяем тип карты
   const icon = document.getElementById('card-type-icon');
   if (!icon) return;
-  if (v.startsWith('4')) icon.textContent = '💳';
-  else if (v.startsWith('5') || v.startsWith('2')) icon.textContent = '💳';
-  else if (v.startsWith('6')) icon.textContent = '🏦';
-  else icon.textContent = '💳';
+  if (v.startsWith('4')) icon.textContent = '';
+  else if (v.startsWith('5') || v.startsWith('2')) icon.textContent = '';
+  else if (v.startsWith('6')) icon.textContent = '';
+  else icon.textContent = '';
 }
 
 function formatExpiry(input) {
@@ -1536,7 +1536,7 @@ function getFallbackData(bizName, bizDesc, bizCity, bizType) {
     theme: 'modern',
     product_name: `Услуга от ${bizName}`,
     product_desc: `Профессиональное выполнение вашего заказа. ${bizDesc}`,
-    product_emoji: '🛍️',
+    
     product_features: ['Быстрое выполнение', 'Гарантия качества', 'Поддержка 24/7'],
     reviews: [
       { name: 'Александра М.', text: 'Очень довольна результатом! Всё сделали быстро и качественно, буду рекомендовать друзьям.', avatar: 'А' },
@@ -1592,7 +1592,7 @@ async function startGeneration() {
   "theme": "название темы из списка которая лучше всего подходит этому бизнесу",
   "product_name": "название главного товара или услуги до 6 слов",
   "product_desc": "описание товара для клиента 2-3 предложения",
-  "product_emoji": "одно эмодзи которое символизирует товар",
+  
   "product_image_query": "ТОЛЬКО 2 слова на английском для поиска фото на стоке. Примеры: flowers, cake, sneakers, coffee, laptop, fitness. ТОЛЬКО существительные, без прилагательных и города",
   "product_features": ["характеристика 1", "характеристика 2", "характеристика 3"],
   "reviews": [
@@ -1603,9 +1603,9 @@ async function startGeneration() {
 }`;
 
     try {
-      const tokenResp = await fetch('http://localhost:8000/token', { method: 'POST' });
+      const tokenResp = await fetch(/token', { method: 'POST' });
       const token = (await tokenResp.json()).access_token;
-      const chatResp = await fetch('http://localhost:8000/chat', {
+      const chatResp = await fetch(/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, messages: [{ role: 'user', content: prompt }] })
@@ -1722,7 +1722,7 @@ function populateProduct(data, bizName) {
   document.getElementById('product-price').textContent = `${price.toLocaleString('ru-RU')} ₽`;
   document.getElementById('product-price-old').textContent = `${oldPrice.toLocaleString('ru-RU')} ₽`;
   document.getElementById('product-badge').textContent = `Скидка ${discount}%`;
-  document.getElementById('product-emoji').textContent = data.product_emoji || '🛍️';
+  document.getElementById('product-emoji').innerHTML = '<svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="16" fill="rgba(255,255,255,0.06)"/><path d="M20 24h24l-3 16H23L20 24z" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20h4l2 4" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="44" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="38" cy="44" r="2" fill="rgba(255,255,255,0.3)"/></svg>';
   document.getElementById('modal-price').textContent = `${price.toLocaleString('ru-RU')} ₽`;
   document.getElementById('modal-merchant').textContent = data.product_name || bizName;
 
@@ -1735,11 +1735,11 @@ function populateProduct(data, bizName) {
 
   // Картинка через Pexels proxy
   const imgContainer = document.getElementById('product-img-container');
-  imgContainer.innerHTML = `<div class="product-img-placeholder" style="animation:pulse 1.5s ease-in-out infinite">${data.product_emoji || '🛍️'}</div>`;
+  imgContainer.innerHTML = `<div class="product-img-placeholder" style="animation:pulse 1.5s ease-in-out infinite">${data.product_emoji || ''}</div>`;
 
   const query = encodeURIComponent(data.product_image_query || (data.product_name || bizName).split(' ').slice(0, 2).join(' '));
 
-  fetch('http://localhost:8000/image?q=' + query)
+  fetch('/image?q=' + query)
     .then(function(r) {
       if (r.ok) return r.blob();
       throw new Error('no image');
@@ -1753,12 +1753,12 @@ function populateProduct(data, bizName) {
         imgContainer.appendChild(img);
       };
       img.onerror = function() {
-        imgContainer.innerHTML = '<div class="product-img-placeholder">' + (data.product_emoji || '🛍️') + '</div>';
+        imgContainer.innerHTML = '<div class="product-img-placeholder"><svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="16" fill="rgba(255,255,255,0.06)"/><path d="M20 24h24l-3 16H23L20 24z" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20h4l2 4" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="44" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="38" cy="44" r="2" fill="rgba(255,255,255,0.3)"/></svg></div>';
       };
       img.src = url;
     })
     .catch(function() {
-      imgContainer.innerHTML = '<div class="product-img-placeholder">' + (data.product_emoji || '🛍️') + '</div>';
+      imgContainer.innerHTML = '<div class="product-img-placeholder"><svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="16" fill="rgba(255,255,255,0.06)"/><path d="M20 24h24l-3 16H23L20 24z" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20h4l2 4" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="44" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="38" cy="44" r="2" fill="rgba(255,255,255,0.3)"/></svg></div>';
     });
 }
 
@@ -1839,7 +1839,7 @@ function openPaymentModal() {
   document.getElementById('payment-form-view').style.display = 'block';
   document.getElementById('payment-success-view').classList.remove('show');
   const btn = document.querySelector('#pay-btn-main');
-  btn.innerHTML = '<span class="pay-btn-inner"><span class="lock-icon">🔒</span> Оплатить безопасно</span>';
+  btn.innerHTML = '<span class="pay-btn-inner"><span class="lock-icon"></span> Оплатить безопасно</span>';
   btn.style.background = '#000';
   btn.classList.remove('loading', 'success');
   btn.disabled = false;
@@ -1855,12 +1855,12 @@ function closePaymentModal() {
 function simulatePayment() {
   const btn = document.getElementById('pay-btn-main');
   btn.classList.add('loading');
-  btn.innerHTML = '<span class="pay-btn-inner"><span style="display:inline-block;animation:spin 0.8s linear infinite">⟳</span> Обрабатываем...</span>';
+  btn.innerHTML = '<span class="pay-btn-inner"><span style="display:inline-block;animation:spin 0.8s linear infinite"></span> Обрабатываем...</span>';
   btn.disabled = true;
   setTimeout(() => {
     btn.classList.remove('loading');
     btn.classList.add('success');
-    btn.innerHTML = '<span class="pay-btn-inner">✓ Оплачено</span>';
+    btn.innerHTML = '<span class="pay-btn-inner">Оплачено</span>';
     setTimeout(() => {
       document.getElementById('payment-form-view').style.display = 'none';
       document.getElementById('payment-success-view').classList.add('show');

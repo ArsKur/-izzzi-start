@@ -894,6 +894,24 @@
   }
   .demo-launch-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(33,208,122,0.3); }
 
+
+  .img-placeholder-icon {
+    width: 64px; height: 64px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.1);
+    position: relative;
+  }
+  .img-placeholder-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px; height: 28px;
+    border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 4px;
+  }
+
 </style>
 </head>
 <body>
@@ -1722,7 +1740,7 @@ function populateProduct(data, bizName) {
   document.getElementById('product-price').textContent = `${price.toLocaleString('ru-RU')} ₽`;
   document.getElementById('product-price-old').textContent = `${oldPrice.toLocaleString('ru-RU')} ₽`;
   document.getElementById('product-badge').textContent = `Скидка ${discount}%`;
-  document.getElementById('product-emoji').innerHTML = '<svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="16" fill="rgba(255,255,255,0.06)"/><path d="M20 24h24l-3 16H23L20 24z" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20h4l2 4" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="44" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="38" cy="44" r="2" fill="rgba(255,255,255,0.3)"/></svg>';
+  document.getElementById('product-emoji').innerHTML = '<div class="img-placeholder-icon"></div>';
   document.getElementById('modal-price').textContent = `${price.toLocaleString('ru-RU')} ₽`;
   document.getElementById('modal-merchant').textContent = data.product_name || bizName;
 
@@ -1753,12 +1771,12 @@ function populateProduct(data, bizName) {
         imgContainer.appendChild(img);
       };
       img.onerror = function() {
-        imgContainer.innerHTML = '<div class="product-img-placeholder"><svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="16" fill="rgba(255,255,255,0.06)"/><path d="M20 24h24l-3 16H23L20 24z" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20h4l2 4" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="44" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="38" cy="44" r="2" fill="rgba(255,255,255,0.3)"/></svg></div>';
+        imgContainer.innerHTML = '<div class="product-img-placeholder"><div class="img-placeholder-icon"></div></div>';
       };
       img.src = url;
     })
     .catch(function() {
-      imgContainer.innerHTML = '<div class="product-img-placeholder"><svg width="64" height="64" viewBox="0 0 64 64" fill="none"><rect width="64" height="64" rx="16" fill="rgba(255,255,255,0.06)"/><path d="M20 24h24l-3 16H23L20 24z" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 20h4l2 4" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="44" r="2" fill="rgba(255,255,255,0.3)"/><circle cx="38" cy="44" r="2" fill="rgba(255,255,255,0.3)"/></svg></div>';
+      imgContainer.innerHTML = '<div class="product-img-placeholder"><div class="img-placeholder-icon"></div></div>';
     });
 }
 

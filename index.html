@@ -1621,9 +1621,9 @@ async function startGeneration() {
 }`;
 
     try {
-      const tokenResp = await fetch(/token', { method: 'POST' });
+      const tokenResp = await fetch('/token', { method: 'POST' });
       const token = (await tokenResp.json()).access_token;
-      const chatResp = await fetch(/chat', {
+      const chatResp = await fetch('/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, messages: [{ role: 'user', content: prompt }] })

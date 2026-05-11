@@ -912,6 +912,28 @@
     border-radius: 4px;
   }
 
+
+  /* BEAUTY THEME STRIP */
+  .beauty-strip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 40px;
+    background: #1a1a1a;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #fafaf8;
+    font-weight: 500;
+  }
+  .beauty-strip-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+  }
+
 </style>
 </head>
 <body>
@@ -1225,6 +1247,8 @@
     </div>
   </div>
 
+  <div id="theme-custom-html"></div>
+
   <div class="wave-divider">
     <svg viewBox="0 0 1200 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
       <path d="M0,30 C200,60 400,0 600,30 C800,60 1000,0 1200,30 L1200,60 L0,60 Z" fill="rgba(0,0,0,0.2)"/>
@@ -1403,83 +1427,302 @@ function formatExpiry(input) {
 
 
 // --- ТЕМЫ ------------------------------------------------
-const THEMES = {
-  modern:  { name: 'Современный',   accent1: '#21d07a', accent2: '#00c9b1', bg: '#050810', radius: '16px', font: 'Onest',     cardStyle: 'default',  heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(33,208,122,0.12) 0%, transparent 60%)' },
-  warm:    { name: 'Тёплый',        accent1: '#ff9f43', accent2: '#ee5a24', bg: '#100800', radius: '28px', font: 'Onest',     cardStyle: 'rounded',  heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,159,67,0.15) 0%, transparent 60%)' },
-  strict:  { name: 'Строгий',       accent1: '#74b9ff', accent2: '#0984e3', bg: '#03060f', radius: '4px',  font: 'Unbounded', cardStyle: 'sharp',    heroPattern: 'linear-gradient(180deg, rgba(116,185,255,0.08) 0%, transparent 50%)' },
-  bold:    { name: 'Яркий',         accent1: '#fd79a8', accent2: '#e84393', bg: '#0f0008', radius: '0px',  font: 'Unbounded', cardStyle: 'sharp',    heroPattern: 'radial-gradient(ellipse 100% 50% at 50% 0%, rgba(253,121,168,0.15) 0%, transparent 55%)' },
-  luxury:  { name: 'Премиум',       accent1: '#d4ac0d', accent2: '#f0e68c', bg: '#080600', radius: '2px',  font: 'Onest',     cardStyle: 'luxury',   heroPattern: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,172,13,0.10) 0%, transparent 60%)' },
-  tech:    { name: 'Технологичный', accent1: '#00cec9', accent2: '#6c5ce7', bg: '#020810', radius: '8px',  font: 'Unbounded', cardStyle: 'tech',     heroPattern: 'linear-gradient(135deg, rgba(0,206,201,0.08) 0%, rgba(108,92,231,0.08) 100%)' },
-  nature:  { name: 'Природный',     accent1: '#00b894', accent2: '#55efc4', bg: '#020f08', radius: '24px', font: 'Onest',     cardStyle: 'rounded',  heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,184,148,0.12) 0%, transparent 60%)' }
+// ═══════════════════════════════════════════════════════════════════════════════
+// TEMPLATES — АРХИТЕКТУРА ТЕМ
+// ═══════════════════════════════════════════════════════════════════════════════
+//
+// КАК ДОБАВИТЬ НОВУЮ ТЕМУ (инструкция для участников команды):
+//
+// 1. Скопируй блок существующей темы (например 'modern') как основу
+// 2. Добавь свою тему в объект TEMPLATES с уникальным ключом (например 'beauty')
+// 3. Заполни обязательные поля:
+//    - name: отображаемое название
+//    - keywords: ключевые слова по которым GigaChat выберет тему
+//    - accent1, accent2: основные цвета
+//    - bg: цвет фона
+//    - radius: скругление углов ('4px' = острый, '24px' = мягкий)
+//    - font: 'Onest' (мягкий) или 'Unbounded' (жирный/технологичный)
+//    - cardStyle: 'default' | 'rounded' | 'sharp' | 'luxury' | 'tech' | 'light'
+//    - heroPattern: CSS background для hero секции
+//    - customCSS: строка с CSS специфичным для твоей темы (добавляется глобально)
+//    - customHTML(data): функция возвращающая дополнительный HTML для экрана клиента
+//      (вставляется ПОСЛЕ hero секции, ПЕРЕД карточкой товара)
+//      data содержит: heroTitle, heroDesc, features[], target_audience, и тд
+//    - navLabel: текст кнопки в навбаре (по умолчанию 'Оформить заказ')
+//    - ctaText: текст кнопки "купить" на карточке товара
+//    - heroLayout: 'center' (по умолчанию) | 'left' | 'minimal'
+//
+// 4. НЕ ТРОГАЙ ничего кроме объекта TEMPLATES и функции applyTheme
+// 5. Проверь что тема работает локально перед отправкой
+//
+// ВАЖНО: в каждой теме кнопка оплаты ДОЛЖНА вызывать openPaymentModal()
+//        — это подключение к ЮKassa, менять нельзя
+// ═══════════════════════════════════════════════════════════════════════════════
+
+const TEMPLATES = {
+
+  // ─── MODERN (дефолтная тема, используется как fallback) ───────────────────
+  modern: {
+    name: 'Современный',
+    keywords: ['бизнес', 'услуги', 'консалтинг', 'агентство', 'стартап'],
+    accent1: '#21d07a', accent2: '#00c9b1', bg: '#050810',
+    radius: '16px', font: 'Onest', cardStyle: 'default',
+    heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(33,208,122,0.12) 0%, transparent 60%)',
+    customCSS: '',
+    navLabel: 'Оформить заказ',
+    ctaText: 'Купить сейчас',
+    heroLayout: 'center',
+    customHTML: (data) => ''
+  },
+
+  // ─── BEAUTY (референс: Glossier) ──────────────────────────────────────────
+  // Светлая минималистичная тема для beauty-бизнеса
+  // Большая типографика, много воздуха, нейтральный фон
+  beauty: {
+    name: 'Beauty / Уход',
+    keywords: ['красота', 'салон', 'косметика', 'маникюр', 'spa', 'уход', 'парикмахер', 'бровист', 'лэшмейкер', 'мастер'],
+    accent1: '#1a1a1a', accent2: '#555555', bg: '#fafaf8',
+    radius: '2px', font: 'Onest', cardStyle: 'light',
+    heroPattern: 'none',
+    navLabel: 'Записаться',
+    ctaText: 'Добавить в корзину',
+    heroLayout: 'left',
+    customCSS: `
+      /* BEAUTY THEME — light mode override */
+      #screen-published.theme-beauty {
+        background: #fafaf8 !important;
+        color: #1a1a1a !important;
+      }
+      #screen-published.theme-beauty .pub-navbar {
+        background: rgba(250,250,248,0.95) !important;
+        border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+      }
+      #screen-published.theme-beauty .pub-logo { color: #1a1a1a !important; font-size: 20px; letter-spacing: -0.02em; }
+      #screen-published.theme-beauty .pub-logo-dot { background: #1a1a1a !important; box-shadow: none !important; }
+      #screen-published.theme-beauty .pub-nav a { color: rgba(0,0,0,0.5) !important; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; }
+      #screen-published.theme-beauty .pub-nav a:hover { color: #1a1a1a !important; }
+      #screen-published.theme-beauty .cta-btn-main {
+        background: #1a1a1a !important;
+        color: #fafaf8 !important;
+        border-radius: 2px !important;
+        font-size: 12px !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase;
+      }
+      #screen-published.theme-beauty .landing-hero {
+        background: #fafaf8 !important;
+        min-height: 85vh;
+        align-items: flex-start;
+        padding: 120px 80px 80px;
+      }
+      #screen-published.theme-beauty .landing-tag {
+        background: transparent !important;
+        border: 1px solid rgba(0,0,0,0.15) !important;
+        color: rgba(0,0,0,0.5) !important;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+      #screen-published.theme-beauty .landing-title {
+        font-size: clamp(48px, 8vw, 96px) !important;
+        font-weight: 300 !important;
+        color: #1a1a1a !important;
+        letter-spacing: -0.04em !important;
+        line-height: 0.95 !important;
+        text-align: left !important;
+        max-width: 700px;
+      }
+      #screen-published.theme-beauty .landing-desc {
+        color: rgba(0,0,0,0.5) !important;
+        text-align: left !important;
+        font-size: 16px;
+        line-height: 1.6;
+        max-width: 480px;
+      }
+      #screen-published.theme-beauty .landing-cta-row { justify-content: flex-start !important; }
+      #screen-published.theme-beauty .cta-btn-ghost {
+        border: 1px solid rgba(0,0,0,0.2) !important;
+        color: #1a1a1a !important;
+        border-radius: 2px !important;
+      }
+      #screen-published.theme-beauty .section-label { color: rgba(0,0,0,0.4) !important; }
+      #screen-published.theme-beauty .section-title { color: #1a1a1a !important; }
+      #screen-published.theme-beauty .feature-card {
+        background: #f0efed !important;
+        border: none !important;
+        border-radius: 2px !important;
+      }
+      #screen-published.theme-beauty .card-title { color: #1a1a1a !important; }
+      #screen-published.theme-beauty .card-text { color: rgba(0,0,0,0.5) !important; }
+      #screen-published.theme-beauty .product-card {
+        background: #f0efed !important;
+        border: none !important;
+        border-radius: 2px !important;
+      }
+      #screen-published.theme-beauty .product-name { color: #1a1a1a !important; font-weight: 300; font-size: 28px; }
+      #screen-published.theme-beauty .product-desc { color: rgba(0,0,0,0.5) !important; }
+      #screen-published.theme-beauty .product-price { color: #1a1a1a !important; }
+      #screen-published.theme-beauty .product-price-old { color: rgba(0,0,0,0.3) !important; }
+      #screen-published.theme-beauty .product-badge {
+        background: #1a1a1a !important;
+        color: #fafaf8 !important;
+        border: none !important;
+        border-radius: 2px !important;
+      }
+      #screen-published.theme-beauty .product-feature { color: rgba(0,0,0,0.5) !important; }
+      #screen-published.theme-beauty .product-feature::before { background: #1a1a1a !important; }
+      #screen-published.theme-beauty .buy-btn {
+        background: #1a1a1a !important;
+        color: #fafaf8 !important;
+        border-radius: 2px !important;
+        font-size: 12px !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase;
+      }
+      #screen-published.theme-beauty .social-proof { background: #f0efed !important; border-color: rgba(0,0,0,0.06) !important; }
+      #screen-published.theme-beauty .proof-number { color: #1a1a1a !important; }
+      #screen-published.theme-beauty .proof-label { color: rgba(0,0,0,0.4) !important; }
+      #screen-published.theme-beauty .review-card { background: #f0efed !important; border: none !important; border-radius: 2px !important; }
+      #screen-published.theme-beauty .review-text { color: rgba(0,0,0,0.6) !important; }
+      #screen-published.theme-beauty .review-name { color: #1a1a1a !important; }
+      #screen-published.theme-beauty .review-date { color: rgba(0,0,0,0.35) !important; }
+      #screen-published.theme-beauty .review-stars { color: #c8a96e !important; }
+      #screen-published.theme-beauty .review-avatar { background: #1a1a1a !important; color: #fafaf8 !important; }
+      #screen-published.theme-beauty .integration-pill {
+        background: #f0efed !important;
+        border-color: rgba(0,0,0,0.1) !important;
+        color: #1a1a1a !important;
+      }
+      #screen-published.theme-beauty .integration-pill.connected {
+        background: #1a1a1a !important;
+        color: #fafaf8 !important;
+        border-color: #1a1a1a !important;
+      }
+      #screen-published.theme-beauty .integrations-bar { background: #f0efed !important; border-color: rgba(0,0,0,0.06) !important; }
+      #screen-published.theme-beauty .integrations-label { color: rgba(0,0,0,0.4) !important; }
+      #screen-published.theme-beauty .wave-divider svg path { fill: #f0efed !important; }
+      #screen-published.theme-beauty .back-to-admin { background: rgba(0,0,0,0.06) !important; color: rgba(0,0,0,0.5) !important; border-color: rgba(0,0,0,0.1) !important; }
+      #screen-published.theme-beauty .scroll-top-btn { background: #1a1a1a !important; color: #fafaf8 !important; }
+      #screen-published.theme-beauty .scroll-progress { background: linear-gradient(90deg, #1a1a1a, #555) !important; }
+      #screen-published.theme-beauty::before { display: none !important; }
+    `,
+    customHTML: (data) => `
+      <div class="beauty-strip">
+        <span>Бесплатная консультация</span>
+        <span class="beauty-strip-dot"></span>
+        <span>Профессиональные мастера</span>
+        <span class="beauty-strip-dot"></span>
+        <span>Онлайн-запись</span>
+      </div>
+    `
+  },
+
+  // ─── ДОБАВЬ СВОЮ ТЕМУ НИЖЕ ────────────────────────────────────────────────
+  // Скопируй блок 'modern' или 'beauty' как основу
+  // Ключ темы должен совпадать с тем что вернёт GigaChat
+  // Обязательно добавь keywords — по ним выбирается тема
+
+  warm:    { name: 'Тёплый',        keywords: ['еда', 'кафе', 'выпечка', 'кондитерская', 'торты'], accent1: '#ff9f43', accent2: '#ee5a24', bg: '#100800', radius: '28px', font: 'Onest', cardStyle: 'rounded', heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,159,67,0.15) 0%, transparent 60%)', customCSS: '', navLabel: 'Заказать', ctaText: 'Заказать сейчас', heroLayout: 'center', customHTML: (data) => '' },
+  strict:  { name: 'Строгий',       keywords: ['юрист', 'бухгалтер', 'финансы', 'консультация', 'аудит'], accent1: '#74b9ff', accent2: '#0984e3', bg: '#03060f', radius: '4px', font: 'Unbounded', cardStyle: 'sharp', heroPattern: 'linear-gradient(180deg, rgba(116,185,255,0.08) 0%, transparent 50%)', customCSS: '', navLabel: 'Получить консультацию', ctaText: 'Оставить заявку', heroLayout: 'center', customHTML: (data) => '' },
+  bold:    { name: 'Яркий',         keywords: ['мода', 'одежда', 'стрит', 'молодёжь', 'бренд'], accent1: '#ff3b5c', accent2: '#ff6b35', bg: '#0f0508', radius: '0px', font: 'Unbounded', cardStyle: 'sharp', heroPattern: 'radial-gradient(ellipse 100% 50% at 50% 0%, rgba(253,121,168,0.15) 0%, transparent 55%)', customCSS: '', navLabel: 'Купить', ctaText: 'Купить сейчас', heroLayout: 'center', customHTML: (data) => '' },
+  luxury:  { name: 'Премиум',       keywords: ['ювелирный', 'премиум', 'эксклюзив', 'недвижимость', 'элитный'], accent1: '#d4ac0d', accent2: '#f0e68c', bg: '#080600', radius: '2px', font: 'Onest', cardStyle: 'luxury', heroPattern: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,172,13,0.10) 0%, transparent 60%)', customCSS: '', navLabel: 'Узнать стоимость', ctaText: 'Приобрести', heroLayout: 'center', customHTML: (data) => '' },
+  tech:    { name: 'Технологичный', keywords: ['it', 'разработка', 'приложение', 'сайт', 'программирование', 'digital'], accent1: '#00cec9', accent2: '#6c5ce7', bg: '#020810', radius: '8px', font: 'Unbounded', cardStyle: 'tech', heroPattern: 'linear-gradient(135deg, rgba(0,206,201,0.08) 0%, rgba(108,92,231,0.08) 100%)', customCSS: '', navLabel: 'Обсудить проект', ctaText: 'Начать проект', heroLayout: 'center', customHTML: (data) => '' },
+  nature:  { name: 'Природный',     keywords: ['экология', 'органика', 'растения', 'йога', 'здоровье', 'wellness'], accent1: '#00b894', accent2: '#55efc4', bg: '#020f08', radius: '24px', font: 'Onest', cardStyle: 'rounded', heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,184,148,0.12) 0%, transparent 60%)', customCSS: '', navLabel: 'Записаться', ctaText: 'Выбрать', heroLayout: 'center', customHTML: (data) => '' },
+
 };
 
-function applyTheme(themeName) {
-  const theme = THEMES[themeName] || THEMES.modern;
+function applyTheme(templateName) {
+  const template = TEMPLATES[templateName] || TEMPLATES.modern;
   const published = document.getElementById('screen-published');
 
+  // Убираем старые классы тем
+  published.className = published.className.replace(/theme-\w+/g, '').trim();
+  published.classList.add(`theme-${templateName}`);
+
   // CSS переменные
-  published.style.setProperty('--accent1', theme.accent1);
-  published.style.setProperty('--accent2', theme.accent2);
-  published.style.setProperty('--bg', theme.bg);
-  published.style.setProperty('--green', theme.accent1);
-  published.style.setProperty('--teal', theme.accent2);
-  published.style.setProperty('--radius', theme.radius || '16px');
+  published.style.setProperty('--accent1', template.accent1);
+  published.style.setProperty('--accent2', template.accent2);
+  published.style.setProperty('--bg', template.bg);
+  published.style.setProperty('--green', template.accent1);
+  published.style.setProperty('--teal', template.accent2);
+  published.style.setProperty('--radius', template.radius || '16px');
 
   // Шрифты заголовков
   published.querySelectorAll('.landing-title, .product-name, .buy-btn, .cta-btn-main, .section-title, .pub-logo').forEach(el => {
-    el.style.fontFamily = `'${theme.font}', sans-serif`;
+    el.style.fontFamily = `'${template.font}', sans-serif`;
   });
 
-  // Hero паттерн — меняем цвет сетки под тему
+  // Hero паттерн
   const hero = published.querySelector('.landing-hero');
-  if (hero) {
-    hero.style.backgroundImage = [
-      `linear-gradient(${theme.accent1}08 1px, transparent 1px)`,
-      `linear-gradient(90deg, ${theme.accent1}08 1px, transparent 1px)`
-    ].join(', ');
+  if (hero && template.heroPattern && template.heroPattern !== 'none') {
+    hero.style.backgroundImage = `linear-gradient(${template.accent1}08 1px, transparent 1px), linear-gradient(90deg, ${template.accent1}08 1px, transparent 1px)`;
     hero.style.backgroundSize = '60px 60px';
   }
 
+  // Hero layout
+  if (hero) {
+    if (template.heroLayout === 'left') {
+      hero.style.alignItems = 'flex-start';
+      hero.style.textAlign = 'left';
+      hero.style.padding = '120px 80px 80px';
+    } else {
+      hero.style.alignItems = 'center';
+      hero.style.textAlign = 'center';
+      hero.style.padding = '80px 40px';
+    }
+    const desc = hero.querySelector('.landing-desc');
+    const cta = hero.querySelector('.landing-cta-row');
+    if (desc) desc.style.textAlign = template.heroLayout === 'left' ? 'left' : 'center';
+    if (cta) cta.style.justifyContent = template.heroLayout === 'left' ? 'flex-start' : 'center';
+  }
+
+  // CTA тексты
+  const navBtn = published.querySelector('.pub-navbar .cta-btn-main');
+  if (navBtn && template.navLabel) navBtn.textContent = template.navLabel;
+  const buyBtn = published.querySelector('.buy-btn');
+  if (buyBtn && template.ctaText) buyBtn.textContent = template.ctaText;
+
   // Стиль карточек
-  const cards = published.querySelectorAll('.feature-card, .review-card, .product-card');
   const cardStyles = {
     default: { border: '1px solid rgba(255,255,255,0.08)', background: 'rgba(255,255,255,0.04)' },
-    rounded: { border: '1px solid rgba(255,255,255,0.1)',  background: 'rgba(255,255,255,0.06)' },
+    rounded: { border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.06)' },
     sharp:   { border: '1px solid rgba(255,255,255,0.15)', background: 'rgba(255,255,255,0.03)' },
-    luxury:  { border: `1px solid ${theme.accent1}44`,     background: `${theme.accent1}08` },
-    tech:    { border: `1px solid ${theme.accent1}33`,     background: 'rgba(0,0,0,0.3)' }
+    luxury:  { border: `1px solid ${template.accent1}44`, background: `${template.accent1}08` },
+    tech:    { border: `1px solid ${template.accent1}33`, background: 'rgba(0,0,0,0.3)' },
+    light:   { border: 'none', background: '#f0efed' }
   };
-  const cs = cardStyles[theme.cardStyle] || cardStyles.default;
-  cards.forEach(c => {
+  const cs = cardStyles[template.cardStyle] || cardStyles.default;
+  published.querySelectorAll('.feature-card, .review-card, .product-card').forEach(c => {
     c.style.border = cs.border;
     c.style.background = cs.background;
-    c.style.borderRadius = theme.radius;
+    c.style.borderRadius = template.radius;
   });
 
   // Скругление кнопок
   published.querySelectorAll('.cta-btn-main, .buy-btn, .cta-btn-ghost').forEach(el => {
-    el.style.borderRadius = theme.radius;
+    el.style.borderRadius = template.radius;
   });
 
-  // Luxury тема — золотые звёзды
-  if (themeName === 'luxury') {
-    published.querySelectorAll('.review-stars').forEach(el => { el.style.color = theme.accent1; });
+  // Инжектим кастомный CSS темы
+  let styleEl = document.getElementById('theme-custom-css');
+  if (!styleEl) {
+    styleEl = document.createElement('style');
+    styleEl.id = 'theme-custom-css';
+    document.head.appendChild(styleEl);
+  }
+  styleEl.textContent = template.customCSS || '';
+
+  // Инжектим кастомный HTML темы
+  const customContainer = document.getElementById('theme-custom-html');
+  if (customContainer && template.customHTML) {
+    customContainer.innerHTML = template.customHTML({});
   }
 
-  // Dot и nav цвета
+  // Dot цвет
   const dot = published.querySelector('.pub-logo-dot');
   if (dot) {
-    dot.style.background = `linear-gradient(135deg, ${theme.accent1}, ${theme.accent2})`;
-    dot.style.boxShadow = `0 0 8px ${theme.accent1}`;
+    dot.style.background = `linear-gradient(135deg, ${template.accent1}, ${template.accent2})`;
   }
-  const navLinks = published.querySelectorAll('.pub-nav a');
-  navLinks.forEach(a => {
-    a.onmouseenter = () => a.style.color = theme.accent1;
-    a.onmouseleave = () => a.style.color = '';
-  });
-
-  // Фоновый паттерн под тему
-  published.style.setProperty('--pattern-color', theme.accent1 + '12');
 }
 
 // --- ЭКРАНЫ -----------------------------------------------
@@ -1551,10 +1794,10 @@ function getFallbackData(bizName, bizDesc, bizCity, bizType) {
     marketing_channel: 'СберТаргет',
     avg_check: '3490',
     kpi_forecast: 'Охват 5 000 человек и до 30 заявок в первый месяц',
-    theme: 'modern',
+    template: 'modern',
     product_name: `Услуга от ${bizName}`,
     product_desc: `Профессиональное выполнение вашего заказа. ${bizDesc}`,
-    
+
     product_features: ['Быстрое выполнение', 'Гарантия качества', 'Поддержка 24/7'],
     reviews: [
       { name: 'Александра М.', text: 'Очень довольна результатом! Всё сделали быстро и качественно, буду рекомендовать друзьям.', avatar: 'А' },
@@ -1607,10 +1850,10 @@ async function startGeneration() {
   "marketing_channel": "самый эффективный канал одно из: СберТаргет Авито сарафанное радио соцсети",
   "avg_check": "средний чек только число",
   "kpi_forecast": "прогноз на первый месяц 1 предложение конкретные цифры",
-  "theme": "название темы из списка которая лучше всего подходит этому бизнесу",
+  "template": "одно слово из списка: modern, beauty, warm, strict, bold, luxury, tech, nature — выбери то что лучше всего соответствует бизнесу по его описанию и нише",
   "product_name": "название главного товара или услуги до 6 слов",
   "product_desc": "описание товара для клиента 2-3 предложения",
-  
+
   "product_image_query": "ТОЛЬКО 2 слова на английском для поиска фото на стоке. Примеры: flowers, cake, sneakers, coffee, laptop, fitness. ТОЛЬКО существительные, без прилагательных и города",
   "product_features": ["характеристика 1", "характеристика 2", "характеристика 3"],
   "reviews": [
@@ -1656,7 +1899,7 @@ function populateResult(data, bizName, bizCity, bizType) {
   generatedData = data;
 
   // Применяем тему
-  applyTheme(data.theme || 'modern');
+  applyTheme(data.template || 'modern');
 
   // Дашборд URL
   const slug = bizName.toLowerCase().replace(/[^a-zA-Zа-яё0-9]/gi, '-').replace(/-+/g, '-').substring(0, 30);

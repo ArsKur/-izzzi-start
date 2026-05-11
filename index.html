@@ -1825,7 +1825,7 @@ async function startGeneration() {
     await animateStep(1); await sleep(700); await doneStep(1);
     await animateStep(2);
 
-    const themeList = Object.entries(THEMES).map(([k,v]) => `${k} (${v.name})`).join(', ');
+    const themeList = Object.entries(TEMPLATES).map(([k,v]) => `${k} (${v.name})`).join(', ');
 
     const prompt = `Ты помогаешь создать сайт и маркетинговую стратегию для малого бизнеса.
 Бизнес: ${bizName}
@@ -1925,7 +1925,7 @@ function populateResult(data, bizName, bizCity, bizType) {
 
   // Дашборд аналитика
   const avgCheck = data.avg_check ? `${Number(data.avg_check).toLocaleString('ru-RU')} ₽` : 'Не определён';
-  const themeName = THEMES[data.theme]?.name || 'Современный';
+  const themeName = TEMPLATES[data.theme]?.name || 'Современный';
 
   document.getElementById('dashboard-container').innerHTML = `
     <div class="dashboard-section" style="padding-bottom: 0;">

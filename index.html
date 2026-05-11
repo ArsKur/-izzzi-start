@@ -1364,6 +1364,427 @@
 let generatedData = null;
 let isDemo = false;
 
+// ═══════════════════════════════════════════════════════════════
+// TEMPLATES — 15 тем
+// ═══════════════════════════════════════════════════════════════
+// Каждая тема содержит:
+//   name, keywords[], accent1, accent2, bg, radius, font,
+//   cardStyle, heroPattern, navLabel, ctaText, heroLayout,
+//   customCSS (строка), customHTML(data) => string,
+//   pexelsHint — подсказка для GigaChat какой запрос слать в Pexels
+// ═══════════════════════════════════════════════════════════════
+
+const TEMPLATES = {
+
+  // ── 1. MODERN (дефолтная) ─────────────────────────────────────
+  modern: {
+    name: 'Современный',
+    keywords: ['бизнес', 'услуги', 'консалтинг', 'агентство', 'стартап'],
+    accent1: '#21d07a', accent2: '#00c9b1', bg: '#050810',
+    radius: '16px', font: 'Onest', cardStyle: 'default',
+    heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(33,208,122,0.12) 0%, transparent 60%)',
+    navLabel: 'Оформить заказ', ctaText: 'Купить сейчас', heroLayout: 'center',
+    sectionProductLabel: 'Наше предложение', sectionProductTitle: 'Закажи прямо сейчас',
+    customCSS: '', customHTML: () => ''
+  },
+
+  // ── 2. BEAUTY / SPA ───────────────────────────────────────────
+  beauty: {
+    name: 'Beauty / Spa',
+    keywords: ['красота', 'салон', 'косметика', 'маникюр', 'spa', 'уход', 'парикмахер', 'бровист', 'лэшмейкер', 'мастер', 'педикюр'],
+    accent1: '#1a1a1a', accent2: '#555555', bg: '#fafaf8',
+    radius: '2px', font: 'Onest', cardStyle: 'light',
+    heroPattern: 'none', navLabel: 'Записаться', ctaText: 'Записаться на процедуру', heroLayout: 'left',
+    sectionProductLabel: 'Наша процедура', sectionProductTitle: 'Запишитесь прямо сейчас',
+    customCSS: `
+      #screen-published.theme-beauty { background:#fafaf8!important; color:#1a1a1a!important; }
+      #screen-published.theme-beauty .pub-navbar { background:rgba(250,250,248,0.95)!important; border-bottom:1px solid rgba(0,0,0,0.08)!important; }
+      #screen-published.theme-beauty .pub-logo { color:#1a1a1a!important; font-size:20px; letter-spacing:-0.02em; }
+      #screen-published.theme-beauty .pub-logo-dot { background:#1a1a1a!important; box-shadow:none!important; }
+      #screen-published.theme-beauty .pub-nav a { color:rgba(0,0,0,0.5)!important; font-size:13px; letter-spacing:0.05em; text-transform:uppercase; }
+      #screen-published.theme-beauty .pub-nav a:hover { color:#1a1a1a!important; }
+      #screen-published.theme-beauty .cta-btn-main { background:#1a1a1a!important; color:#fafaf8!important; border-radius:2px!important; font-size:12px!important; letter-spacing:0.08em!important; text-transform:uppercase; }
+      #screen-published.theme-beauty .landing-hero { background:#fafaf8!important; min-height:85vh; align-items:flex-start; padding:120px 80px 80px; }
+      #screen-published.theme-beauty .landing-tag { background:transparent!important; border:1px solid rgba(0,0,0,0.15)!important; color:rgba(0,0,0,0.5)!important; font-size:11px; letter-spacing:0.15em; text-transform:uppercase; }
+      #screen-published.theme-beauty .landing-title { font-size:clamp(48px,8vw,96px)!important; font-weight:300!important; color:#1a1a1a!important; letter-spacing:-0.04em!important; line-height:0.95!important; text-align:left!important; max-width:700px; }
+      #screen-published.theme-beauty .landing-desc { color:rgba(0,0,0,0.5)!important; text-align:left!important; }
+      #screen-published.theme-beauty .landing-cta-row { justify-content:flex-start!important; }
+      #screen-published.theme-beauty .cta-btn-ghost { border:1px solid rgba(0,0,0,0.2)!important; color:#1a1a1a!important; border-radius:2px!important; }
+      #screen-published.theme-beauty .section-label { color:rgba(0,0,0,0.4)!important; }
+      #screen-published.theme-beauty .section-title { color:#1a1a1a!important; }
+      #screen-published.theme-beauty .feature-card { background:#f0efed!important; border:none!important; border-radius:2px!important; }
+      #screen-published.theme-beauty .card-title { color:#1a1a1a!important; }
+      #screen-published.theme-beauty .card-text { color:rgba(0,0,0,0.5)!important; }
+      #screen-published.theme-beauty .product-card { background:#f0efed!important; border:none!important; border-radius:2px!important; }
+      #screen-published.theme-beauty .product-name { color:#1a1a1a!important; font-weight:300; font-size:28px; }
+      #screen-published.theme-beauty .product-desc { color:rgba(0,0,0,0.5)!important; }
+      #screen-published.theme-beauty .product-price { color:#1a1a1a!important; }
+      #screen-published.theme-beauty .product-badge { background:#1a1a1a!important; color:#fafaf8!important; border:none!important; border-radius:2px!important; }
+      #screen-published.theme-beauty .product-feature { color:rgba(0,0,0,0.5)!important; }
+      #screen-published.theme-beauty .product-feature::before { background:#1a1a1a!important; }
+      #screen-published.theme-beauty .buy-btn { background:#1a1a1a!important; color:#fafaf8!important; border-radius:2px!important; font-size:12px!important; letter-spacing:0.08em!important; text-transform:uppercase; }
+      #screen-published.theme-beauty .social-proof { background:#f0efed!important; border-color:rgba(0,0,0,0.06)!important; }
+      #screen-published.theme-beauty .proof-number { color:#1a1a1a!important; }
+      #screen-published.theme-beauty .proof-label { color:rgba(0,0,0,0.4)!important; }
+      #screen-published.theme-beauty .review-card { background:#f0efed!important; border:none!important; border-radius:2px!important; }
+      #screen-published.theme-beauty .review-text { color:rgba(0,0,0,0.6)!important; }
+      #screen-published.theme-beauty .review-name { color:#1a1a1a!important; }
+      #screen-published.theme-beauty .review-stars { color:#c8a96e!important; }
+      #screen-published.theme-beauty .review-avatar { background:#1a1a1a!important; color:#fafaf8!important; }
+      #screen-published.theme-beauty .integrations-bar { background:#f0efed!important; border-color:rgba(0,0,0,0.06)!important; }
+      #screen-published.theme-beauty .integrations-label { color:rgba(0,0,0,0.4)!important; }
+      #screen-published.theme-beauty .integration-pill { background:#f0efed!important; border-color:rgba(0,0,0,0.1)!important; color:#1a1a1a!important; }
+      #screen-published.theme-beauty .back-to-admin { background:rgba(0,0,0,0.06)!important; color:rgba(0,0,0,0.5)!important; border-color:rgba(0,0,0,0.1)!important; }
+      #screen-published.theme-beauty .scroll-top-btn { background:#1a1a1a!important; color:#fafaf8!important; }
+      #screen-published.theme-beauty::before { display:none!important; }
+      .beauty-strip { display:flex; align-items:center; justify-content:center; gap:20px; padding:12px 40px; background:#1a1a1a; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:#fafaf8; font-weight:500; }
+      .beauty-strip-dot { width:4px; height:4px; border-radius:50%; background:rgba(255,255,255,0.3); flex-shrink:0; }
+    `,
+    customHTML: () => `<div class="beauty-strip"><span>Бесплатная консультация</span><span class="beauty-strip-dot"></span><span>Профессиональные мастера</span><span class="beauty-strip-dot"></span><span>Онлайн-запись</span></div>`
+  },
+
+  // ── 3. RESTAURANT / FINE DINING ────────────────────────────────
+  restaurant: {
+    name: 'Ресторан / Fine Dining',
+    keywords: ['ресторан', 'кафе', 'бар', 'bistro', 'dining', 'кухня', 'повар', 'гастро'],
+    accent1: '#c9a84c', accent2: '#e8d5a0', bg: '#0a0800',
+    radius: '4px', font: 'Onest', cardStyle: 'luxury',
+    heroPattern: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 60%)',
+    navLabel: 'Забронировать стол', ctaText: 'Заказать', heroLayout: 'center',
+    sectionProductLabel: 'Шеф рекомендует', sectionProductTitle: 'Блюдо вечера',
+    customCSS: `
+      #screen-published.theme-restaurant { background:#0a0800!important; }
+      #screen-published.theme-restaurant .pub-navbar { background:rgba(10,8,0,0.95)!important; border-bottom:1px solid rgba(201,168,76,0.15)!important; }
+      #screen-published.theme-restaurant .landing-title { font-family:'Georgia',serif!important; font-weight:400!important; letter-spacing:0.02em!important; }
+      #screen-published.theme-restaurant .section-title { font-family:'Georgia',serif!important; }
+      #screen-published.theme-restaurant .landing-tag { border-color:rgba(201,168,76,0.3)!important; color:#c9a84c!important; background:rgba(201,168,76,0.06)!important; }
+      #screen-published.theme-restaurant .cta-btn-main { background:linear-gradient(135deg,#c9a84c,#a8883c)!important; color:#0a0800!important; }
+      #screen-published.theme-restaurant .feature-card { border-color:rgba(201,168,76,0.15)!important; }
+      #screen-published.theme-restaurant .product-badge { background:rgba(201,168,76,0.15)!important; color:#c9a84c!important; border-color:rgba(201,168,76,0.3)!important; }
+      #screen-published.theme-restaurant .buy-btn { background:linear-gradient(135deg,#c9a84c,#a8883c)!important; color:#0a0800!important; }
+      #screen-published.theme-restaurant .review-stars { color:#c9a84c!important; }
+      #screen-published.theme-restaurant .proof-number { color:#c9a84c!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 4. STREET FOOD / FASTFOOD ─────────────────────────────────
+  streetfood: {
+    name: 'Street Food / Фастфуд',
+    keywords: ['бургер', 'пицца', 'шаурма', 'доставка', 'фастфуд', 'уличная еда', 'роллы', 'суши', 'wok'],
+    accent1: '#ff3300', accent2: '#ff7700', bg: '#0f0300',
+    radius: '0px', font: 'Unbounded', cardStyle: 'sharp',
+    heroPattern: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,51,0,0.18) 0%, transparent 60%)',
+    navLabel: 'Заказать', ctaText: 'ЗАКАЗАТЬ СЕЙЧАС', heroLayout: 'center',
+    sectionProductLabel: 'ХИТ ПРОДАЖ', sectionProductTitle: 'Закажи прямо сейчас',
+    customCSS: `
+      #screen-published.theme-streetfood .landing-title { font-size:clamp(40px,8vw,100px)!important; font-weight:900!important; letter-spacing:-0.03em!important; text-transform:uppercase!important; }
+      #screen-published.theme-streetfood .cta-btn-main { background:linear-gradient(135deg,#ff3300,#ff7700)!important; font-size:14px!important; letter-spacing:0.1em!important; text-transform:uppercase!important; padding:20px 40px!important; }
+      #screen-published.theme-streetfood .buy-btn { background:linear-gradient(135deg,#ff3300,#ff7700)!important; text-transform:uppercase!important; letter-spacing:0.08em!important; }
+      #screen-published.theme-streetfood .landing-tag { background:rgba(255,51,0,0.15)!important; border-color:rgba(255,51,0,0.4)!important; color:#ff7700!important; }
+      #screen-published.theme-streetfood .review-stars { color:#ff7700!important; }
+      #screen-published.theme-streetfood .proof-number { color:#ff3300!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 5. FASHION / ONLINE SHOP ──────────────────────────────────
+  fashion: {
+    name: 'Fashion / Магазин',
+    keywords: ['одежда', 'мода', 'магазин', 'boutique', 'fashion', 'бренд', 'аксессуары', 'обувь', 'украшения'],
+    accent1: '#111111', accent2: '#444444', bg: '#ffffff',
+    radius: '0px', font: 'Onest', cardStyle: 'light',
+    heroPattern: 'none', navLabel: 'В корзину', ctaText: 'Добавить в корзину', heroLayout: 'center',
+    sectionProductLabel: 'Новая коллекция', sectionProductTitle: 'Выбери свой стиль',
+    customCSS: `
+      #screen-published.theme-fashion { background:#ffffff!important; color:#111111!important; }
+      #screen-published.theme-fashion .pub-navbar { background:rgba(255,255,255,0.97)!important; border-bottom:1px solid rgba(0,0,0,0.08)!important; }
+      #screen-published.theme-fashion .pub-logo { color:#111!important; }
+      #screen-published.theme-fashion .pub-logo-dot { background:#111!important; box-shadow:none!important; }
+      #screen-published.theme-fashion .pub-nav a { color:rgba(0,0,0,0.5)!important; }
+      #screen-published.theme-fashion .pub-nav a:hover { color:#111!important; }
+      #screen-published.theme-fashion .landing-hero { background:#f8f8f8!important; }
+      #screen-published.theme-fashion .landing-title { color:#111!important; }
+      #screen-published.theme-fashion .landing-desc { color:rgba(0,0,0,0.5)!important; }
+      #screen-published.theme-fashion .landing-tag { border-color:rgba(0,0,0,0.15)!important; color:rgba(0,0,0,0.4)!important; background:transparent!important; }
+      #screen-published.theme-fashion .cta-btn-main { background:#111!important; color:#fff!important; border-radius:0!important; letter-spacing:0.1em!important; text-transform:uppercase!important; font-size:12px!important; }
+      #screen-published.theme-fashion .cta-btn-ghost { border-color:rgba(0,0,0,0.2)!important; color:#111!important; }
+      #screen-published.theme-fashion .feature-card { background:#f4f4f4!important; border:none!important; border-radius:0!important; }
+      #screen-published.theme-fashion .card-title { color:#111!important; }
+      #screen-published.theme-fashion .card-text { color:rgba(0,0,0,0.5)!important; }
+      #screen-published.theme-fashion .product-card { background:#f4f4f4!important; border:none!important; border-radius:0!important; }
+      #screen-published.theme-fashion .product-name { color:#111!important; }
+      #screen-published.theme-fashion .product-desc { color:rgba(0,0,0,0.5)!important; }
+      #screen-published.theme-fashion .product-price { color:#111!important; }
+      #screen-published.theme-fashion .product-badge { background:#111!important; color:#fff!important; border:none!important; border-radius:0!important; }
+      #screen-published.theme-fashion .buy-btn { background:#111!important; color:#fff!important; border-radius:0!important; letter-spacing:0.08em!important; text-transform:uppercase!important; }
+      #screen-published.theme-fashion .section-label { color:rgba(0,0,0,0.4)!important; }
+      #screen-published.theme-fashion .section-title { color:#111!important; }
+      #screen-published.theme-fashion .social-proof { background:#f4f4f4!important; border-color:rgba(0,0,0,0.08)!important; }
+      #screen-published.theme-fashion .proof-number { color:#111!important; }
+      #screen-published.theme-fashion .proof-label { color:rgba(0,0,0,0.4)!important; }
+      #screen-published.theme-fashion .review-card { background:#f4f4f4!important; border:none!important; border-radius:0!important; }
+      #screen-published.theme-fashion .review-text { color:rgba(0,0,0,0.6)!important; }
+      #screen-published.theme-fashion .review-name { color:#111!important; }
+      #screen-published.theme-fashion .review-stars { color:#888!important; }
+      #screen-published.theme-fashion .review-avatar { background:#111!important; color:#fff!important; }
+      #screen-published.theme-fashion .integrations-bar { background:#f4f4f4!important; border-color:rgba(0,0,0,0.06)!important; }
+      #screen-published.theme-fashion .integrations-label { color:rgba(0,0,0,0.4)!important; }
+      #screen-published.theme-fashion .integration-pill { background:#fff!important; border-color:rgba(0,0,0,0.1)!important; color:#111!important; }
+      #screen-published.theme-fashion .back-to-admin { background:rgba(0,0,0,0.06)!important; color:rgba(0,0,0,0.5)!important; border-color:rgba(0,0,0,0.1)!important; }
+      #screen-published.theme-fashion::before { display:none!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 6. ONLINE EDUCATION ───────────────────────────────────────
+  education: {
+    name: 'Онлайн-образование',
+    keywords: ['курс', 'обучение', 'школа', 'онлайн', 'образование', 'тренинг', 'вебинар', 'урок', 'mentor', 'коучинг'],
+    accent1: '#4f7fff', accent2: '#7b9fff', bg: '#03060f',
+    radius: '12px', font: 'Onest', cardStyle: 'tech',
+    heroPattern: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(79,127,255,0.15) 0%, transparent 60%)',
+    navLabel: 'Начать бесплатно', ctaText: 'Записаться на курс', heroLayout: 'center',
+    sectionProductLabel: 'Наш флагманский курс', sectionProductTitle: 'Начни учиться сегодня',
+    customCSS: `
+      #screen-published.theme-education .cta-btn-main { background:linear-gradient(135deg,#4f7fff,#7b9fff)!important; }
+      #screen-published.theme-education .buy-btn { background:linear-gradient(135deg,#4f7fff,#7b9fff)!important; }
+      #screen-published.theme-education .proof-number { color:#4f7fff!important; }
+      #screen-published.theme-education .review-stars { color:#4f7fff!important; }
+      #screen-published.theme-education .landing-tag { border-color:rgba(79,127,255,0.3)!important; color:#7b9fff!important; background:rgba(79,127,255,0.08)!important; }
+      #screen-published.theme-education .product-badge { background:rgba(79,127,255,0.15)!important; color:#7b9fff!important; border-color:rgba(79,127,255,0.3)!important; }
+      #screen-published.theme-education .product-price { color:#7b9fff!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 7. IT / SAAS ──────────────────────────────────────────────
+  tech: {
+    name: 'IT / SaaS',
+    keywords: ['it', 'saas', 'разработка', 'приложение', 'digital', 'программирование', 'сайт', 'api', 'software'],
+    accent1: '#00cec9', accent2: '#6c5ce7', bg: '#020810',
+    radius: '8px', font: 'Unbounded', cardStyle: 'tech',
+    heroPattern: 'linear-gradient(135deg, rgba(0,206,201,0.08) 0%, rgba(108,92,231,0.08) 100%)',
+    navLabel: 'Попробовать', ctaText: 'Начать проект', heroLayout: 'center',
+    sectionProductLabel: 'Наш продукт', sectionProductTitle: 'Технология будущего',
+    customCSS: `
+      #screen-published.theme-tech .cta-btn-main { background:linear-gradient(135deg,#00cec9,#6c5ce7)!important; }
+      #screen-published.theme-tech .buy-btn { background:linear-gradient(135deg,#00cec9,#6c5ce7)!important; }
+      #screen-published.theme-tech .proof-number { color:#00cec9!important; }
+      #screen-published.theme-tech .landing-tag { border-color:rgba(0,206,201,0.3)!important; color:#00cec9!important; background:rgba(0,206,201,0.08)!important; }
+      #screen-published.theme-tech .product-price { color:#00cec9!important; }
+      #screen-published.theme-tech .product-badge { background:rgba(0,206,201,0.12)!important; color:#00cec9!important; border-color:rgba(0,206,201,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 8. FITNESS / GYM ─────────────────────────────────────────
+  fitness: {
+    name: 'Фитнес / Gym',
+    keywords: ['фитнес', 'спортзал', 'gym', 'тренер', 'тренировка', 'спорт', 'кросс', 'бокс', 'борьба'],
+    accent1: '#ff2d55', accent2: '#ff6b00', bg: '#060404',
+    radius: '0px', font: 'Unbounded', cardStyle: 'sharp',
+    heroPattern: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,45,85,0.18) 0%, transparent 55%)',
+    navLabel: 'Первое занятие бесплатно', ctaText: 'Записаться на тренировку', heroLayout: 'center',
+    sectionProductLabel: 'Наш топ-пакет', sectionProductTitle: 'Начни трансформацию',
+    customCSS: `
+      #screen-published.theme-fitness .landing-title { font-size:clamp(40px,8vw,90px)!important; font-weight:900!important; letter-spacing:-0.04em!important; text-transform:uppercase!important; }
+      #screen-published.theme-fitness .cta-btn-main { background:linear-gradient(135deg,#ff2d55,#ff6b00)!important; text-transform:uppercase!important; letter-spacing:0.1em!important; font-size:14px!important; }
+      #screen-published.theme-fitness .buy-btn { background:linear-gradient(135deg,#ff2d55,#ff6b00)!important; text-transform:uppercase!important; letter-spacing:0.08em!important; }
+      #screen-published.theme-fitness .proof-number { color:#ff2d55!important; }
+      #screen-published.theme-fitness .review-stars { color:#ff6b00!important; }
+      #screen-published.theme-fitness .landing-tag { border-color:rgba(255,45,85,0.4)!important; color:#ff2d55!important; background:rgba(255,45,85,0.1)!important; }
+      #screen-published.theme-fitness .product-price { color:#ff2d55!important; }
+      #screen-published.theme-fitness .product-badge { background:rgba(255,45,85,0.15)!important; color:#ff2d55!important; border-color:rgba(255,45,85,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 9. YOGA / WELLNESS ────────────────────────────────────────
+  wellness: {
+    name: 'Йога / Wellness',
+    keywords: ['йога', 'wellness', 'медитация', 'массаж', 'релакс', 'пилатес', 'растяжка', 'здоровье', 'mindfulness'],
+    accent1: '#7d9b76', accent2: '#b5c9a8', bg: '#0d0f0a',
+    radius: '32px', font: 'Onest', cardStyle: 'rounded',
+    heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(125,155,118,0.12) 0%, transparent 60%)',
+    navLabel: 'Начать практику', ctaText: 'Записаться на занятие', heroLayout: 'center',
+    sectionProductLabel: 'Наша практика', sectionProductTitle: 'Найди свой баланс',
+    customCSS: `
+      #screen-published.theme-wellness .cta-btn-main { background:linear-gradient(135deg,#7d9b76,#b5c9a8)!important; color:#0d0f0a!important; }
+      #screen-published.theme-wellness .buy-btn { background:linear-gradient(135deg,#7d9b76,#b5c9a8)!important; color:#0d0f0a!important; }
+      #screen-published.theme-wellness .proof-number { color:#7d9b76!important; }
+      #screen-published.theme-wellness .review-stars { color:#b5c9a8!important; }
+      #screen-published.theme-wellness .landing-tag { border-color:rgba(125,155,118,0.3)!important; color:#b5c9a8!important; background:rgba(125,155,118,0.08)!important; }
+      #screen-published.theme-wellness .landing-title { font-weight:300!important; letter-spacing:0.02em!important; }
+      #screen-published.theme-wellness .product-price { color:#7d9b76!important; }
+      #screen-published.theme-wellness .product-badge { background:rgba(125,155,118,0.15)!important; color:#b5c9a8!important; border-color:rgba(125,155,118,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 10. PHOTOGRAPHER / VIDEO ──────────────────────────────────
+  photo: {
+    name: 'Фотограф / Видеограф',
+    keywords: ['фотограф', 'фотосъёмка', 'видеограф', 'портрет', 'свадебный', 'коммерческий', 'репортаж', 'клип'],
+    accent1: '#e0e0e0', accent2: '#aaaaaa', bg: '#050505',
+    radius: '0px', font: 'Onest', cardStyle: 'sharp',
+    heroPattern: 'none', navLabel: 'Заказать съёмку', ctaText: 'Заказать съёмку', heroLayout: 'left',
+    sectionProductLabel: 'Пакет съёмки', sectionProductTitle: 'Ваш идеальный момент',
+    customCSS: `
+      #screen-published.theme-photo .landing-title { font-size:clamp(44px,8vw,88px)!important; font-weight:200!important; letter-spacing:-0.03em!important; text-align:left!important; }
+      #screen-published.theme-photo .landing-desc { text-align:left!important; }
+      #screen-published.theme-photo .landing-cta-row { justify-content:flex-start!important; }
+      #screen-published.theme-photo .landing-hero { align-items:flex-start!important; text-align:left!important; padding:120px 80px 80px!important; }
+      #screen-published.theme-photo .cta-btn-main { background:#fff!important; color:#000!important; border-radius:0!important; }
+      #screen-published.theme-photo .cta-btn-ghost { border-color:rgba(255,255,255,0.2)!important; border-radius:0!important; }
+      #screen-published.theme-photo .buy-btn { background:#fff!important; color:#000!important; border-radius:0!important; }
+      #screen-published.theme-photo .proof-number { color:#e0e0e0!important; }
+      #screen-published.theme-photo .landing-tag { border-color:rgba(255,255,255,0.2)!important; color:rgba(255,255,255,0.5)!important; background:transparent!important; }
+      #screen-published.theme-photo .review-stars { color:#aaa!important; }
+      #screen-published.theme-photo .product-price { color:#e0e0e0!important; }
+      #screen-published.theme-photo::before { display:none!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 11. LEGAL / CONSULTING ────────────────────────────────────
+  legal: {
+    name: 'Юридические услуги',
+    keywords: ['юрист', 'адвокат', 'юридический', 'нотариус', 'право', 'консультация', 'legal', 'бухгалтер', 'аудит', 'налоги'],
+    accent1: '#74b9ff', accent2: '#0984e3', bg: '#03060f',
+    radius: '4px', font: 'Unbounded', cardStyle: 'sharp',
+    heroPattern: 'linear-gradient(180deg, rgba(116,185,255,0.08) 0%, transparent 50%)',
+    navLabel: 'Получить консультацию', ctaText: 'Оставить заявку', heroLayout: 'center',
+    sectionProductLabel: 'Наша услуга', sectionProductTitle: 'Профессиональная защита',
+    customCSS: `
+      #screen-published.theme-legal .landing-title { font-size:clamp(28px,4vw,54px)!important; letter-spacing:-0.01em!important; }
+      #screen-published.theme-legal .cta-btn-main { background:linear-gradient(135deg,#74b9ff,#0984e3)!important; }
+      #screen-published.theme-legal .buy-btn { background:linear-gradient(135deg,#74b9ff,#0984e3)!important; }
+      #screen-published.theme-legal .proof-number { color:#74b9ff!important; }
+      #screen-published.theme-legal .review-stars { color:#74b9ff!important; }
+      #screen-published.theme-legal .landing-tag { border-color:rgba(116,185,255,0.3)!important; color:#74b9ff!important; background:rgba(116,185,255,0.07)!important; }
+      #screen-published.theme-legal .product-price { color:#74b9ff!important; }
+      #screen-published.theme-legal .product-badge { background:rgba(116,185,255,0.12)!important; color:#74b9ff!important; border-color:rgba(116,185,255,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 12. MEDICINE / CLINIC ─────────────────────────────────────
+  medical: {
+    name: 'Медицина / Клиника',
+    keywords: ['врач', 'клиника', 'медицина', 'стоматолог', 'дерматолог', 'медцентр', 'лечение', 'здоровье', 'диагностика'],
+    accent1: '#0abfbc', accent2: '#0d9488', bg: '#030d0d',
+    radius: '14px', font: 'Onest', cardStyle: 'default',
+    heroPattern: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(10,191,188,0.10) 0%, transparent 60%)',
+    navLabel: 'Записаться к врачу', ctaText: 'Записаться на приём', heroLayout: 'center',
+    sectionProductLabel: 'Наша услуга', sectionProductTitle: 'Запишитесь на приём',
+    customCSS: `
+      #screen-published.theme-medical .cta-btn-main { background:linear-gradient(135deg,#0abfbc,#0d9488)!important; }
+      #screen-published.theme-medical .buy-btn { background:linear-gradient(135deg,#0abfbc,#0d9488)!important; }
+      #screen-published.theme-medical .proof-number { color:#0abfbc!important; }
+      #screen-published.theme-medical .review-stars { color:#0abfbc!important; }
+      #screen-published.theme-medical .landing-tag { border-color:rgba(10,191,188,0.3)!important; color:#0abfbc!important; background:rgba(10,191,188,0.07)!important; }
+      #screen-published.theme-medical .product-price { color:#0abfbc!important; }
+      #screen-published.theme-medical .product-badge { background:rgba(10,191,188,0.12)!important; color:#0abfbc!important; border-color:rgba(10,191,188,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 13. REAL ESTATE ───────────────────────────────────────────
+  realestate: {
+    name: 'Недвижимость',
+    keywords: ['недвижимость', 'квартира', 'аренда', 'продажа', 'риэлтор', 'жильё', 'дом', 'коммерческая'],
+    accent1: '#d4ac0d', accent2: '#f0c040', bg: '#080600',
+    radius: '2px', font: 'Onest', cardStyle: 'luxury',
+    heroPattern: 'radial-gradient(ellipse 70% 50% at 50% 0%, rgba(212,172,13,0.10) 0%, transparent 60%)',
+    navLabel: 'Оставить заявку', ctaText: 'Оставить заявку', heroLayout: 'left',
+    sectionProductLabel: 'Наш объект', sectionProductTitle: 'Топовый вариант',
+    customCSS: `
+      #screen-published.theme-realestate .landing-hero { align-items:flex-start!important; text-align:left!important; padding:120px 80px 80px!important; }
+      #screen-published.theme-realestate .landing-title { text-align:left!important; font-size:clamp(36px,5vw,64px)!important; }
+      #screen-published.theme-realestate .landing-desc { text-align:left!important; }
+      #screen-published.theme-realestate .landing-cta-row { justify-content:flex-start!important; }
+      #screen-published.theme-realestate .cta-btn-main { background:linear-gradient(135deg,#d4ac0d,#a8880a)!important; color:#080600!important; }
+      #screen-published.theme-realestate .buy-btn { background:linear-gradient(135deg,#d4ac0d,#a8880a)!important; color:#080600!important; }
+      #screen-published.theme-realestate .proof-number { color:#d4ac0d!important; }
+      #screen-published.theme-realestate .review-stars { color:#d4ac0d!important; }
+      #screen-published.theme-realestate .landing-tag { border-color:rgba(212,172,13,0.3)!important; color:#d4ac0d!important; background:rgba(212,172,13,0.07)!important; }
+      #screen-published.theme-realestate .product-price { color:#d4ac0d!important; font-size:28px!important; }
+      #screen-published.theme-realestate .product-badge { background:rgba(212,172,13,0.15)!important; color:#d4ac0d!important; border-color:rgba(212,172,13,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 14. FLOWERS / FLORIST ─────────────────────────────────────
+  flowers: {
+    name: 'Цветочный магазин',
+    keywords: ['цветы', 'флорист', 'букет', 'цветочный', 'флористика', 'roses', 'тюльпаны', 'оформление'],
+    accent1: '#e88080', accent2: '#f4b8b8', bg: '#100808',
+    radius: '24px', font: 'Onest', cardStyle: 'rounded',
+    heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(232,128,128,0.12) 0%, transparent 60%)',
+    navLabel: 'Заказать букет', ctaText: 'Заказать букет', heroLayout: 'center',
+    sectionProductLabel: 'Наш хит', sectionProductTitle: 'Выбери свой букет',
+    customCSS: `
+      #screen-published.theme-flowers .cta-btn-main { background:linear-gradient(135deg,#e88080,#d45050)!important; }
+      #screen-published.theme-flowers .buy-btn { background:linear-gradient(135deg,#e88080,#d45050)!important; }
+      #screen-published.theme-flowers .proof-number { color:#e88080!important; }
+      #screen-published.theme-flowers .review-stars { color:#e88080!important; }
+      #screen-published.theme-flowers .landing-tag { border-color:rgba(232,128,128,0.3)!important; color:#f4b8b8!important; background:rgba(232,128,128,0.08)!important; }
+      #screen-published.theme-flowers .landing-title { font-weight:300!important; }
+      #screen-published.theme-flowers .product-price { color:#e88080!important; }
+      #screen-published.theme-flowers .product-badge { background:rgba(232,128,128,0.15)!important; color:#e88080!important; border-color:rgba(232,128,128,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 15. AUTO / DETAILING ──────────────────────────────────────
+  auto: {
+    name: 'Авто / Детейлинг',
+    keywords: ['автосервис', 'детейлинг', 'авто', 'ремонт авто', 'шиномонтаж', 'кузов', 'полировка', 'мойка'],
+    accent1: '#cc0000', accent2: '#ff2222', bg: '#080303',
+    radius: '0px', font: 'Unbounded', cardStyle: 'sharp',
+    heroPattern: 'radial-gradient(ellipse 80% 50% at 50% 0%, rgba(204,0,0,0.15) 0%, transparent 55%)',
+    navLabel: 'Записаться', ctaText: 'Записаться на обслуживание', heroLayout: 'center',
+    sectionProductLabel: 'Услуга', sectionProductTitle: 'Запишитесь на обслуживание',
+    customCSS: `
+      #screen-published.theme-auto .landing-title { font-size:clamp(36px,7vw,80px)!important; font-weight:900!important; text-transform:uppercase!important; letter-spacing:-0.02em!important; }
+      #screen-published.theme-auto .cta-btn-main { background:linear-gradient(135deg,#cc0000,#ff2222)!important; text-transform:uppercase!important; letter-spacing:0.1em!important; }
+      #screen-published.theme-auto .buy-btn { background:linear-gradient(135deg,#cc0000,#ff2222)!important; text-transform:uppercase!important; letter-spacing:0.08em!important; }
+      #screen-published.theme-auto .proof-number { color:#cc0000!important; }
+      #screen-published.theme-auto .review-stars { color:#cc0000!important; }
+      #screen-published.theme-auto .landing-tag { border-color:rgba(204,0,0,0.4)!important; color:#ff2222!important; background:rgba(204,0,0,0.1)!important; }
+      #screen-published.theme-auto .product-price { color:#cc0000!important; }
+      #screen-published.theme-auto .product-badge { background:rgba(204,0,0,0.15)!important; color:#ff2222!important; border-color:rgba(204,0,0,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+  // ── 16. HANDMADE / CREATIVE ───────────────────────────────────
+  handmade: {
+    name: 'Handmade / Мастерская',
+    keywords: ['handmade', 'ручная работа', 'мастерская', 'изделие', 'вязание', 'керамика', 'украшения', 'творческий', 'авторский'],
+    accent1: '#d4914a', accent2: '#e8bb88', bg: '#0c0800',
+    radius: '20px', font: 'Onest', cardStyle: 'rounded',
+    heroPattern: 'radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,145,74,0.12) 0%, transparent 60%)',
+    navLabel: 'Заказать изделие', ctaText: 'Заказать изделие', heroLayout: 'center',
+    sectionProductLabel: 'Наша работа', sectionProductTitle: 'Сделано с душой',
+    customCSS: `
+      #screen-published.theme-handmade .cta-btn-main { background:linear-gradient(135deg,#d4914a,#b87030)!important; color:#fff!important; }
+      #screen-published.theme-handmade .buy-btn { background:linear-gradient(135deg,#d4914a,#b87030)!important; color:#fff!important; }
+      #screen-published.theme-handmade .proof-number { color:#d4914a!important; }
+      #screen-published.theme-handmade .review-stars { color:#d4914a!important; }
+      #screen-published.theme-handmade .landing-tag { border-color:rgba(212,145,74,0.3)!important; color:#e8bb88!important; background:rgba(212,145,74,0.08)!important; }
+      #screen-published.theme-handmade .landing-title { font-weight:300!important; }
+      #screen-published.theme-handmade .product-price { color:#d4914a!important; }
+      #screen-published.theme-handmade .product-badge { background:rgba(212,145,74,0.15)!important; color:#d4914a!important; border-color:rgba(212,145,74,0.3)!important; }
+    `,
+    customHTML: () => ''
+  },
+
+};
+// Конец TEMPLATES
+
+
 // --- ОНБОРДИНГ ---
 function chooseYesIP() {
   isDemo = false;
